@@ -2,6 +2,8 @@
 
 namespace SimpleSAML\Module\expirycheck\Auth\Process;
 
+use Webmozart\Assert\Assert;
+
 /**
  * Filter which show "about to expire" warning or deny access if netid is expired.
  *
@@ -46,7 +48,7 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
     {
         parent::__construct($config, $reserved);
 
-        assert(is_array($config));
+        Assert::isArray($config);
 
         if (array_key_exists('warndaysbefore', $config)) {
             $this->warndaysbefore = $config['warndaysbefore'];
@@ -140,7 +142,7 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
         $expireOnDate = strtotime($state['Attributes'][$this->expirydate_attr][0]);
 
         if ($this->shWarning($state, $expireOnDate, $this->warndaysbefore)) {
-            assert(is_array($state));
+            Assert::isArray($state);
             if (isset($state['isPassive']) && $state['isPassive'] === true) {
                 // We have a passive request. Skip the warning.
                 return;

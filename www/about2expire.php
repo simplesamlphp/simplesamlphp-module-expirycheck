@@ -33,7 +33,7 @@ $t->data['netId'] = $state['netId'];
 if ($daysleft == 0) {
     # netid will expire today
     $t->data['header'] = $t->t('{expirycheck:expwarning:warning_header_today}', [
-                                '%NETID%' => htmlspecialchars($->data['netId'])
+                                '%NETID%' => htmlspecialchars($t->data['netId'])
                         ]);
     $t->data['warning'] = $t->t('{expirycheck:expwarning:warning_today}', [
                                 '%NETID%' => htmlspecialchars($t->data['netId'])

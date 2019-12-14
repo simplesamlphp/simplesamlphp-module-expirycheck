@@ -27,7 +27,6 @@ $t = new \SimpleSAML\XHTML\Template($globalConfig, 'expirycheck:about2expire.php
 $t->data['autofocus'] = 'yesbutton';
 $t->data['yesTarget'] = \SimpleSAML\Module::getModuleURL('expirycheck/about2expire.php');
 $t->data['yesData'] = ['StateId' => $id];
-$t->data['warning'] = $warning;
 $t->data['expireOnDate'] = $state['expireOnDate'];
 $t->data['netId'] = $state['netId'];
 

@@ -2,6 +2,10 @@
 
 namespace SimpleSAML\Module\expirycheck\Auth\Process;
 
+use SimpleSAML\Auth;
+use SimpleSAML\Logger;
+use SimpleSAML\Module;
+use SimpleSAML\Utils;
 use Webmozart\Assert\Assert;
 
 /**
@@ -148,26 +152,26 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
                 return;
             }
 
-            \SimpleSAML\Logger::warning('expirycheck: NetID '.$netId.' is about to expire!');
+            Logger::warning('expirycheck: NetID '.$netId.' is about to expire!');
 
             // Save state and redirect
             $state['expireOnDate'] = date($this->date_format, $expireOnDate);
             $state['netId'] = $netId;
-            $id = \SimpleSAML\Auth\State::saveState($state, 'expirywarning:about2expire');
-            $url = \SimpleSAML\Module::getModuleURL('expirycheck/about2expire.php');
-            \SimpleSAML\Utils\HTTP::redirectTrustedURL($url, ['StateId' => $id]);
+            $id = Auth\State::saveState($state, 'expirywarning:about2expire');
+            $url = Module::getModuleURL('expirycheck/about2expire.php');
+            Utils\HTTP::redirectTrustedURL($url, ['StateId' => $id]);
         }
 
         if (!$this->checkDate($expireOnDate)) {
-            \SimpleSAML\Logger::error('expirycheck: NetID '.$netId.
+            Logger::error('expirycheck: NetID '.$netId.
                 ' has expired ['.date($this->date_format, $expireOnDate).']. Access denied!');
 
             /* Save state and redirect. */
             $state['expireOnDate'] = date($this->date_format, $expireOnDate);
             $state['netId'] = $netId;
-            $id = \SimpleSAML\Auth\State::saveState($state, 'expirywarning:expired');
-            $url = \SimpleSAML\Module::getModuleURL('expirycheck/expired.php');
-            \SimpleSAML\Utils\HTTP::redirectTrustedURL($url, ['StateId' => $id]);
+            $id = Auth\State::saveState($state, 'expirywarning:expired');
+            $url = Module::getModuleURL('expirycheck/expired.php');
+            Utils\HTTP::redirectTrustedURL($url, ['StateId' => $id]);
         }
     }
 }

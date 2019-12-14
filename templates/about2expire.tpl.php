@@ -29,7 +29,7 @@ foreach ($this->data['yesData'] as $name => $value) {
 }
 ?>
 
-<h3><?php echo $warning; ?></h3>
+<h3><?php echo $this->data['warning']; ?></h3>
 <p><?php echo $this->t('{expirycheck:expwarning:expiry_date_text}')." ".$this->data['expireOnDate']; ?></p>
 <input type="submit" name="yes" id="yesbutton" value="<?php echo $buttonContinue; ?>" />
 </form>

@@ -12,6 +12,7 @@ if (!array_key_exists('StateId', $_REQUEST)) {
     throw new \SimpleSAML\Error\BadRequest('Missing required StateId query parameter.');
 }
 $id = $_REQUEST['StateId'];
+/** @psalm-var array $state */
 $state = \SimpleSAML\Auth\State::loadState($id, 'expirywarning:about2expire');
 
 if (array_key_exists('yes', $_REQUEST)) {

@@ -24,7 +24,7 @@ $globalConfig = \SimpleSAML\Configuration::getInstance();
 
 $daysleft = $state['daysleft'];
 
-$t = new \SimpleSAML\XHTML\Template($globalConfig, 'expirycheck:about2expire.php');
+$t = new \SimpleSAML\XHTML\Template($globalConfig, 'expirycheck:about2expire.twig');
 $t->data['autofocus'] = 'yesbutton';
 $t->data['yesTarget'] = \SimpleSAML\Module::getModuleURL('expirycheck/about2expire.php');
 $t->data['yesData'] = ['StateId' => $id];
@@ -66,4 +66,4 @@ if ($daysleft == 0) {
                         ]);
 }
 
-$t->show();
+$t->send();

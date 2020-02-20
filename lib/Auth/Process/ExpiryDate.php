@@ -27,16 +27,16 @@ use Webmozart\Assert\Assert;
  * @author Alex Mihičinac, ARNES. <alexm@arnes.si>
  * @package SimpleSAMLphp
  */
-class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
+class ExpiryDate extends Auth\ProcessingFilter
 {
     /** @var int */
     private $warndaysbefore = 0;
 
-    /** @var string|null */
-    private $netid_attr = null;
+    /** @var string */
+    private $netid_attr;
 
-    /** @var string|null */
-    private $expirydate_attr = null;
+    /** @var string */
+    private $expirydate_attr;
 
     /** @var string */
     private $date_format = 'd.m.Y';
@@ -48,11 +48,9 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
      * @param array &$config  Configuration information about this filter.
      * @param mixed $reserved  For future use.
      */
-    public function __construct(&$config, $reserved)
+    public function __construct(array &$config, $reserved)
     {
         parent::__construct($config, $reserved);
-
-        Assert::isArray($config);
 
         if (array_key_exists('warndaysbefore', $config)) {
             $this->warndaysbefore = $config['warndaysbefore'];
@@ -96,7 +94,7 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
      * @param int $warndaysbefore
      * @return bool
      */
-    public function shWarning(&$state, $expireOnDate, $warndaysbefore)
+    public function shWarning(array &$state, int $expireOnDate, int $warndaysbefore): bool
     {
         $now = time();
         $end = $expireOnDate;
@@ -118,7 +116,7 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
      * @param int $expireOnDate
      * @return bool
      */
-    public function checkDate($expireOnDate)
+    public function checkDate(int $expireOnDate): bool
     {
         $now = time();
         $end = $expireOnDate;
@@ -137,8 +135,10 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
      * @param array &$state  The current state.
      * @return void
      */
-    public function process(&$state)
+    public function process(array &$state): void
     {
+        Assert::keyExists($state, 'Attributes');
+
         /*
          * UTC format: 20090527080352Z
          */
@@ -146,13 +146,12 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
         $expireOnDate = strtotime($state['Attributes'][$this->expirydate_attr][0]);
 
         if ($this->shWarning($state, $expireOnDate, $this->warndaysbefore)) {
-            Assert::isArray($state);
             if (isset($state['isPassive']) && $state['isPassive'] === true) {
                 // We have a passive request. Skip the warning.
                 return;
             }
 
-            Logger::warning('expirycheck: NetID '.$netId.' is about to expire!');
+            Logger::warning('expirycheck: NetID ' . $netId . ' is about to expire!');
 
             // Save state and redirect
             $state['expireOnDate'] = date($this->date_format, $expireOnDate);
@@ -163,8 +162,8 @@ class ExpiryDate extends \SimpleSAML\Auth\ProcessingFilter
         }
 
         if (!$this->checkDate($expireOnDate)) {
-            Logger::error('expirycheck: NetID '.$netId.
-                ' has expired ['.date($this->date_format, $expireOnDate).']. Access denied!');
+            Logger::error('expirycheck: NetID ' . $netId .
+                ' has expired [' . date($this->date_format, $expireOnDate) . ']. Access denied!');
 
             /* Save state and redirect. */
             $state['expireOnDate'] = date($this->date_format, $expireOnDate);

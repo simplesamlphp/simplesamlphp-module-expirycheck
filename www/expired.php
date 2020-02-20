@@ -16,7 +16,7 @@ $state = \SimpleSAML\Auth\State::loadState($_REQUEST['StateId'], 'expirywarning:
 
 $globalConfig = \SimpleSAML\Configuration::getInstance();
 
-$t = new \SimpleSAML\XHTML\Template($globalConfig, 'expirycheck:expired.php');
+$t = new \SimpleSAML\XHTML\Template($globalConfig, 'expirycheck:expired.twig');
 $t->data['expireOnDate'] = $state['expireOnDate'];
 $t->data['netId'] = $state['netId'];
-$t->show();
+$t->send();

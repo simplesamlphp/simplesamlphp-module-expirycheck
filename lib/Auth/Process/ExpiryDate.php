@@ -24,7 +24,6 @@ use Webmozart\Assert\Assert;
  * ),
  * </code>
  *
- * @author Alex Mihičinac, ARNES. <alexm@arnes.si>
  * @package SimpleSAMLphp
  */
 class ExpiryDate extends Auth\ProcessingFilter

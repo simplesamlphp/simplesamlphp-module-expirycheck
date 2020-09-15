@@ -132,7 +132,6 @@ class ExpiryDate extends Auth\ProcessingFilter
      * Apply filter
      *
      * @param array &$state  The current state.
-     * @return void
      */
     public function process(array &$state): void
     {

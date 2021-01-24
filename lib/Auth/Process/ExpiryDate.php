@@ -2,11 +2,11 @@
 
 namespace SimpleSAML\Module\expirycheck\Auth\Process;
 
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
 use SimpleSAML\Logger;
 use SimpleSAML\Module;
 use SimpleSAML\Utils;
-use Webmozart\Assert\Assert;
 
 /**
  * Filter which show "about to expire" warning or deny access if netid is expired.

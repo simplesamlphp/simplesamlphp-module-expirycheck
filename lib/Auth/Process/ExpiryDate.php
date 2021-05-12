@@ -142,6 +142,7 @@ class ExpiryDate extends Auth\ProcessingFilter
          */
         $netId = $state['Attributes'][$this->netid_attr][0];
         $expireOnDate = strtotime($state['Attributes'][$this->expirydate_attr][0]);
+        $httpUtils = new Utils\HTTP();
 
         if ($this->shWarning($state, $expireOnDate, $this->warndaysbefore)) {
             if (isset($state['isPassive']) && $state['isPassive'] === true) {
@@ -156,7 +157,7 @@ class ExpiryDate extends Auth\ProcessingFilter
             $state['netId'] = $netId;
             $id = Auth\State::saveState($state, 'expirywarning:about2expire');
             $url = Module::getModuleURL('expirycheck/about2expire.php');
-            Utils\HTTP::redirectTrustedURL($url, ['StateId' => $id]);
+            $httpUtils->redirectTrustedURL($url, ['StateId' => $id]);
         }
 
         if (!$this->checkDate($expireOnDate)) {
@@ -168,7 +169,7 @@ class ExpiryDate extends Auth\ProcessingFilter
             $state['netId'] = $netId;
             $id = Auth\State::saveState($state, 'expirywarning:expired');
             $url = Module::getModuleURL('expirycheck/expired.php');
-            Utils\HTTP::redirectTrustedURL($url, ['StateId' => $id]);
+            $httpUtils->redirectTrustedURL($url, ['StateId' => $id]);
         }
     }
 }

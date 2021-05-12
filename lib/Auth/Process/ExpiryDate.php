@@ -29,16 +29,16 @@ use SimpleSAML\Utils;
 class ExpiryDate extends Auth\ProcessingFilter
 {
     /** @var int */
-    private $warndaysbefore = 0;
+    private int $warndaysbefore = 0;
 
     /** @var string */
-    private $netid_attr;
+    private string $netid_attr;
 
     /** @var string */
-    private $expirydate_attr;
+    private string $expirydate_attr;
 
     /** @var string */
-    private $date_format = 'd.m.Y';
+    private string $date_format = 'd.m.Y';
 
 
     /**

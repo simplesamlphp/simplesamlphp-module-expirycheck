@@ -1,0 +1,7 @@
+expirycheck-about2expire:
+    path:       /about2expire
+    defaults:   { _controller: 'SimpleSAML\Module\expirycheck\Controller\ExpiryCheck::about2expire' }
+
+expirycheck-expired:
+    path:       /expired
+    defaults:   { _controller: 'SimpleSAML\Module\expirycheck\Controller\ExpiryCheck::expired' }

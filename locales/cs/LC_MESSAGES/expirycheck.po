@@ -1,4 +1,3 @@
-
 #, fuzzy
 msgid ""
 msgstr ""
@@ -15,41 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
-
-msgid "{expirycheck:expwarning:access_denied}"
-msgstr "Nemáte přístup k této službě."
-
-msgid "{expirycheck:expwarning:warning_today}"
-msgstr "Pozor! Váš účet %NETID% dnes expiruje!"
-
-msgid "{expirycheck:expwarning:warning}"
-msgstr "Pozor! Váš účet %NETID% expiruje za %DAYSLEFT% %DAYS%!"
-
-msgid "{expirycheck:expwarning:day}"
-msgstr "den"
-
-msgid "{expirycheck:expwarning:days}"
-msgstr "dní"
-
-msgid "{expirycheck:expwarning:no_access_to}"
-msgstr "Váš účet %NETID% expiroval, přístup odmítnut!"
-
-msgid "{expirycheck:expwarning:contact_home}"
-msgstr ""
-"Přístup ke službě je řízen Vaší domovskou organizací. Prosím, kontaktujte"
-" svého lokálního správce."
-
-msgid "{expirycheck:expwarning:expiry_date_text}"
-msgstr "Datum expirace:"
-
-msgid "{expirycheck:expwarning:warning_header}"
-msgstr "Pozor! Váš účet %NETID% expiruje za %DAYSLEFT% %DAYS%!"
-
-msgid "{expirycheck:expwarning:btn_continue}"
-msgstr "Jsem si toho vědom, pokračovat..."
-
-msgid "{expirycheck:expwarning:warning_header_today}"
-msgstr "Pozor! Váš účet %NETID% dnes expiruje!"
 
 msgid "Expiration date:"
 msgstr "Datum expirace:"

@@ -14,43 +14,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "{expirycheck:expwarning:contact_home}"
-msgstr ""
-"Ukufinyelela amasevisi kulawulwa inhlangano yakho yasekhaya. Sicela "
-"uthinte ukusekela kwakho kwe-IT kwasendaweni uma unemibuzo."
-
-msgid "{expirycheck:expwarning:day}"
+msgid "day"
 msgstr "usuku"
 
-msgid "{expirycheck:expwarning:btn_continue}"
-msgstr "Ngiyakwazi lokhu, qhubeka..."
-
-msgid "{expirycheck:expwarning:days}"
+msgid "days"
 msgstr "izinsuku"
 
-msgid "{expirycheck:expwarning:expiry_date_text}"
+msgid "Expiration date:"
 msgstr "Usuku lokuphelelwa isikhathi:"
 
-msgid "{expirycheck:expwarning:access_denied}"
+msgid "You do not have access to this service"
 msgstr "Awukwazi ukufinyelela le sevisi"
 
-msgid "{expirycheck:expwarning:warning_today}"
+msgid "Warning, your account %NETID% will expire today!"
 msgstr "Isixwayiso, i-akhawunti yakho ethi %NETID% izophelelwa isikhathi namuhla!"
 
-msgid "{expirycheck:expwarning:warning_header}"
+msgid "Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!"
 msgstr ""
 "Isixwayiso, i-akhawunti yakho ethi %NETID% izophelelwa isikhathi "
 "ezinsukwini ezingu-%DAYSLEFT% %DAYS%!"
 
-msgid "{expirycheck:expwarning:no_access_to}"
+msgid "Your account %NETID% has expired, access denied!"
 msgstr ""
 "I-akhawunti yakho ethi %NETID% iphelelwe isikhathi, ukufinyelela "
 "kwenqatshiwe!"
 
-msgid "{expirycheck:expwarning:warning_header_today}"
+msgid "Warning, your account %NETID% will expire today!"
 msgstr "Isixwayiso, i-akhawunti yakho ethi %NETID% izophelelwa isikhathi namuhla!"
 
-msgid "{expirycheck:expwarning:warning}"
+msgid "Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!"
 msgstr ""
 "Isixwayiso, i-akhawunti yakho ethi %NETID% izophelelwa isikhathi "
 "ezinsukwini ezingu-%DAYSLEFT% %DAYS%!"

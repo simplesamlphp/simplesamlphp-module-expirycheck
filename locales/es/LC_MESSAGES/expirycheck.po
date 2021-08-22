@@ -15,42 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-msgid "{expirycheck:expwarning:access_denied}"
-msgstr "No tiene acceso a este servicio"
-
-msgid "{expirycheck:expwarning:warning_today}"
-msgstr "¡Atención, su cuenta %NETID% expira hoy!"
-
-msgid "{expirycheck:expwarning:warning}"
-msgstr "¡Atención, su cuenta %NETID% expirará en %DAYSLEFT% %DAYS%!"
-
-msgid "{expirycheck:expwarning:day}"
-msgstr "día"
-
-msgid "{expirycheck:expwarning:days}"
-msgstr "días"
-
-msgid "{expirycheck:expwarning:no_access_to}"
-msgstr "Su cuenta %NETID% ha expirado, ¡acceso denegado!"
-
-msgid "{expirycheck:expwarning:contact_home}"
-msgstr ""
-"El acceso a los servicios está controlado por su institución de origen. "
-"Por favor, contacte con su servicio técnico local si tiene alguna "
-"pregunta."
-
-msgid "{expirycheck:expwarning:expiry_date_text}"
-msgstr "Fecha de expiración:"
-
-msgid "{expirycheck:expwarning:warning_header}"
-msgstr "¡Atención, su cuenta %NETID% expirará en %DAYSLEFT% %DAYS%!"
-
-msgid "{expirycheck:expwarning:btn_continue}"
-msgstr "Soy consciente de ello, continúa..."
-
-msgid "{expirycheck:expwarning:warning_header_today}"
-msgstr "¡Atención, su cuenta %NETID% expira hoy!"
-
 msgid "Expiration date:"
 msgstr "Fecha de expiración:"
 

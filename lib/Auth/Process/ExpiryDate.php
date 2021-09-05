@@ -204,7 +204,7 @@ class ExpiryDate extends Auth\ProcessingFilter
      */
     private function convertFiletimeToUnixtime(string $fileTime): int
     {
-        $winSecs = intval($fileTime) / 10000000; // divide by 10 000 000 to get seconds
+        $winSecs = intval(intval($fileTime) / 10000000); // divide by 10 000 000 to get seconds
         return $winSecs - 11644473600; // 1.1.1600 -> 1.1.1970 difference in seconds
     }
 }

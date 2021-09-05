@@ -15,18 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-msgid "{expirycheck:expwarning:access_denied}"
-msgstr "您不能使用本服务"
-
-msgid "{expirycheck:expwarning:no_access_to}"
-msgstr "您的帐号 %NETID% 已过期,访问被拒绝!"
-
-msgid "{expirycheck:expwarning:expiry_date_text}"
-msgstr "有效期至："
-
-msgid "{expirycheck:expwarning:btn_continue}"
-msgstr "我已知悉，继续..."
-
 msgid "Expiration date:"
 msgstr "有效期至："
 

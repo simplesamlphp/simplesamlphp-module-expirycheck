@@ -4,9 +4,18 @@ namespace SimpleSAML\Module\expirycheck\Auth\Process;
 
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
+use SimpleSAML\Error;
 use SimpleSAML\Logger;
 use SimpleSAML\Module;
 use SimpleSAML\Utils;
+
+use function array_key_exists;
+use function date;
+use function intval;
+use function is_int;
+use function is_string;
+use function strtotime;
+use function time;
 
 /**
  * Filter which show "about to expire" warning or deny access if netid is expired.
@@ -15,13 +24,14 @@ use SimpleSAML\Utils;
  *
  * <code>
  * // show about2xpire warning or deny access if netid is expired
- * 10 => array(
+ * 10 => [
  *     'class' => 'expirycheck:ExpiryDate',
- *     'netid_attr' => 'eduPersonPrincipalName',
- *     'expirydate_attr' => 'schacExpiryDate',
- *     'warndaysbefore' => '60',
+ *     'netid_attr' => 'userPrincipalName',
+ *     'expirydate_attr' => 'accountExpires',
+ *     'convert_expirydate_to_unixtime' => true,
+ *     'warndaysbefore' => 60,
  *     'date_format' => 'd.m.Y', # php date syntax
- * ),
+ * ],
  * </code>
  *
  * @package SimpleSAMLphp
@@ -40,6 +50,9 @@ class ExpiryDate extends Auth\ProcessingFilter
     /** @var string */
     private string $date_format = 'd.m.Y';
 
+    /** @var bool */
+    private bool $convert_expirydate_to_unixtime = false;
+
 
     /**
      * Initialize this filter.
@@ -52,35 +65,47 @@ class ExpiryDate extends Auth\ProcessingFilter
         parent::__construct($config, $reserved);
 
         if (array_key_exists('warndaysbefore', $config)) {
-            $this->warndaysbefore = $config['warndaysbefore'];
-            if (!is_string($this->warndaysbefore)) {
-                throw new \Exception('Invalid value for number of days given to expirycheck::ExpiryDate filter.');
+            if (!is_int($config['warndaysbefore'])) {
+                throw new Error\Exception('Invalid value for number of days given to expirycheck::ExpiryDate filter.');
             }
+
+            $this->warndaysbefore = $config['warndaysbefore'];
         }
 
         if (array_key_exists('netid_attr', $config)) {
-            $this->netid_attr = $config['netid_attr'];
-            if (!is_string($this->netid_attr)) {
-                throw new \Exception(
+            if (!is_string($config['netid_attr'])) {
+                throw new Error\Exception(
                     'Invalid attribute name given as eduPersonPrincipalName to expirycheck::ExpiryDate filter.'
                 );
             }
+
+            $this->netid_attr = $config['netid_attr'];
         }
 
         if (array_key_exists('expirydate_attr', $config)) {
-            $this->expirydate_attr = $config['expirydate_attr'];
-            if (!is_string($this->expirydate_attr)) {
-                throw new \Exception(
+            if (!is_string($config['expirydate_attr'])) {
+                throw new Error\Exception(
                     'Invalid attribute name given as schacExpiryDate to expirycheck::ExpiryDate filter.'
                 );
             }
+
+            $this->expirydate_attr = $config['expirydate_attr'];
         }
 
         if (array_key_exists('date_format', $config)) {
-            $this->date_format = $config['date_format'];
-            if (!is_string($this->date_format)) {
-                throw new \Exception('Invalid date format given to expirycheck::ExpiryDate filter.');
+            if (!is_string($config['date_format'])) {
+                throw new Error\Exception('Invalid date format given to expirycheck::ExpiryDate filter.');
             }
+
+            $this->date_format = $config['date_format'];
+        }
+
+        if (array_key_exists('convert_expirydate_to_unixtime', $config)) {
+            if (!is_bool($config['convert_expirydate_to_unixtime'])) {
+                throw new Error\Exception('Invalid value for convert_expirydate_to_unixtime given to expirycheck::ExpiryDate filter.');
+            }
+
+            $this->convert_expirydate_to_unixtime = $config['convert_expirydate_to_unixtime'];
         }
     }
 
@@ -96,10 +121,8 @@ class ExpiryDate extends Auth\ProcessingFilter
     public function shWarning(array &$state, int $expireOnDate, int $warndaysbefore): bool
     {
         $now = time();
-        $end = $expireOnDate;
-
         if ($expireOnDate >= $now) {
-            $days = (int) (($end - $now) / 86400); //24*60*60=86400
+            $days = intval(($expireOnDate - $now) / 86400); //24*60*60=86400
             if ($days <= $warndaysbefore) {
                 $state['daysleft'] = $days;
                 return true;
@@ -118,9 +141,7 @@ class ExpiryDate extends Auth\ProcessingFilter
     public function checkDate(int $expireOnDate): bool
     {
         $now = time();
-        $end = $expireOnDate;
-
-        if ($now <= $end) {
+        if ($now <= $expireOnDate) {
             return true;
         } else {
             return false;
@@ -141,22 +162,25 @@ class ExpiryDate extends Auth\ProcessingFilter
          * UTC format: 20090527080352Z
          */
         $netId = $state['Attributes'][$this->netid_attr][0];
-        $expireOnDate = strtotime($state['Attributes'][$this->expirydate_attr][0]);
-        $httpUtils = new Utils\HTTP();
+        if ($this->convert_expirydate_to_unixtime === true) {
+            $expireOnDate = $this->convertFiletimeToUnixtime($state['Attributes'][$this->expirydate_attr][0]);
+        } else {
+            $expireOnDate = strtotime($state['Attributes'][$this->expirydate_attr][0]);
+        }
 
+        $httpUtils = new Utils\HTTP();
         if ($this->shWarning($state, $expireOnDate, $this->warndaysbefore)) {
             if (isset($state['isPassive']) && $state['isPassive'] === true) {
                 // We have a passive request. Skip the warning.
                 return;
             }
-
             Logger::warning('expirycheck: NetID ' . $netId . ' is about to expire!');
 
             // Save state and redirect
             $state['expireOnDate'] = date($this->date_format, $expireOnDate);
             $state['netId'] = $netId;
             $id = Auth\State::saveState($state, 'expirywarning:about2expire');
-            $url = Module::getModuleURL('expirycheck/about2expire.php');
+            $url = Module::getModuleURL('expirycheck/about2expire');
             $httpUtils->redirectTrustedURL($url, ['StateId' => $id]);
         }
 
@@ -168,8 +192,19 @@ class ExpiryDate extends Auth\ProcessingFilter
             $state['expireOnDate'] = date($this->date_format, $expireOnDate);
             $state['netId'] = $netId;
             $id = Auth\State::saveState($state, 'expirywarning:expired');
-            $url = Module::getModuleURL('expirycheck/expired.php');
+            $url = Module::getModuleURL('expirycheck/expired');
             $httpUtils->redirectTrustedURL($url, ['StateId' => $id]);
         }
+    }
+
+
+    /**
+     * @param string $fileTime Time as represented by MS Active Directory
+     * @return int Unix-time
+     */
+    private function convertFiletimeToUnixtime(string $fileTime): int
+    {
+        $winSecs = intval($fileTime) / 10000000; // divide by 10 000 000 to get seconds
+        return $winSecs - 11644473600; // 1.1.1600 -> 1.1.1970 difference in seconds
     }
 }

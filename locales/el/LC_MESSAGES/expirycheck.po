@@ -15,41 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-msgid "{expirycheck:expwarning:access_denied}"
-msgstr "Δεν έχετε πρόσβαση σε αυτή την υπηρεσία"
-
-msgid "{expirycheck:expwarning:warning_today}"
-msgstr "Προειδοποίηση: Ο λογαριασμός %NETID% λήγει σήμερα!"
-
-msgid "{expirycheck:expwarning:warning}"
-msgstr "Προειδοποίηση: Ο λογαριασμός %NETID% θα λήξει σε %DAYSLEFT% %DAYS%!"
-
-msgid "{expirycheck:expwarning:day}"
-msgstr "ημέρα"
-
-msgid "{expirycheck:expwarning:days}"
-msgstr "ημέρες"
-
-msgid "{expirycheck:expwarning:no_access_to}"
-msgstr "Ο λογαριασμός %NETID% u03adχει λήξει - δεν επιτρέπεται η πρόσβαση!"
-
-msgid "{expirycheck:expwarning:contact_home}"
-msgstr ""
-"Η πρόσβαση στις υπηρεσίες ελέγχεται από τον Οικείο Φορέα. Για περαιτέρω "
-"ερωτήσεις, παρακαλούμε απευθυνθείτε στο τοπικό Γραφείο Αρωγής Χρηστών."
-
-msgid "{expirycheck:expwarning:expiry_date_text}"
-msgstr "Ημερομηνία λήξης ισχύος:"
-
-msgid "{expirycheck:expwarning:warning_header}"
-msgstr "Προειδοποίηση: Ο λογαριασμός %NETID% θα λήξει σε %DAYSLEFT% %DAYS%!"
-
-msgid "{expirycheck:expwarning:btn_continue}"
-msgstr "Είμαι ενήμερος - συνέχεια"
-
-msgid "{expirycheck:expwarning:warning_header_today}"
-msgstr "Προειδοποίηση: Ο λογαριασμός %NETID% λήγει σήμερα!"
-
 msgid "Expiration date:"
 msgstr "Ημερομηνία λήξης ισχύος:"
 

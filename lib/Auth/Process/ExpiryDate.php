@@ -102,7 +102,9 @@ class ExpiryDate extends Auth\ProcessingFilter
 
         if (array_key_exists('convert_expirydate_to_unixtime', $config)) {
             if (!is_bool($config['convert_expirydate_to_unixtime'])) {
-                throw new Error\Exception('Invalid value for convert_expirydate_to_unixtime given to expirycheck::ExpiryDate filter.');
+                throw new Error\Exception(
+                    'Invalid value for convert_expirydate_to_unixtime given to expirycheck::ExpiryDate filter.'
+                );
             }
 
             $this->convert_expirydate_to_unixtime = $config['convert_expirydate_to_unixtime'];

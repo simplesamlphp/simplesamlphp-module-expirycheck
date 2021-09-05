@@ -96,7 +96,7 @@ class ExpiryCheck
 
         $t = new Template($this->config, 'expirycheck:about2expire.twig');
         $t->data['autofocus'] = 'yesbutton';
-        $t->data['yesTarget'] = Module::getModuleURL('expirycheck/about2expire.php');
+        $t->data['yesTarget'] = Module::getModuleURL('expirycheck/about2expire');
         $t->data['yesData'] = ['StateId' => $stateId];
         $t->data['expireOnDate'] = $state['expireOnDate'];
         $t->data['netId'] = htmlspecialchars($state['netId']);

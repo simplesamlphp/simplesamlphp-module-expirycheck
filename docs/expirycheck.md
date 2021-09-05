@@ -15,22 +15,23 @@ filter to run before all the other filters you may have enabled.
 How to setup the expirycheck module
 -----------------------------------
 
-First you need to enable the expirycheck module, touch an `enable` file, in the
-expirycheck module:
+First you need to enable the expirycheck module in SimpleSAMLphp's `config/config.php`:
 
-    touch modules/expirycheck/enable
+    module.enable => [
+        'expirycheck' => true,
+    ],
 
 Then you need to set filter parameters in your config.php file.
 
 Example:
 
-	10 => array(
+	10 => [
 		'class' 	  => 'expirycheck:ExpiryDate',
-		'netid_attr' 	  => 'eduPersonPrincipalName',
-		'expirydate_attr' => 'schacExpiryDate',
+		'netid_attr' 	  => 'userPrincipalName',
+		'expirydate_attr' => 'accountExpires',
 		'warndaysbefore'  => '60',
 		'date_format' 	  => 'd.m.Y',
-	),
+	],
 
 
 Parameter netid_attr represents (ldap) attribute name which has user's NetID stored in it,

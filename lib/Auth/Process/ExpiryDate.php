@@ -4,9 +4,18 @@ namespace SimpleSAML\Module\expirycheck\Auth\Process;
 
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
+use SimpleSAML\Error;
 use SimpleSAML\Logger;
 use SimpleSAML\Module;
 use SimpleSAML\Utils;
+
+use function array_key_exists;
+use function date;
+use function intval;
+use function is_int;
+use function is_string;
+use function strtotime;
+use function time;
 
 /**
  * Filter which show "about to expire" warning or deny access if netid is expired.
@@ -15,13 +24,13 @@ use SimpleSAML\Utils;
  *
  * <code>
  * // show about2xpire warning or deny access if netid is expired
- * 10 => array(
+ * 10 => [
  *     'class' => 'expirycheck:ExpiryDate',
- *     'netid_attr' => 'eduPersonPrincipalName',
- *     'expirydate_attr' => 'schacExpiryDate',
- *     'warndaysbefore' => '60',
+ *     'netid_attr' => 'userPrincipalName',
+ *     'expirydate_attr' => 'accountExpires',
+ *     'warndaysbefore' => 60,
  *     'date_format' => 'd.m.Y', # php date syntax
- * ),
+ * ],
  * </code>
  *
  * @package SimpleSAMLphp
@@ -53,15 +62,15 @@ class ExpiryDate extends Auth\ProcessingFilter
 
         if (array_key_exists('warndaysbefore', $config)) {
             $this->warndaysbefore = $config['warndaysbefore'];
-            if (!is_string($this->warndaysbefore)) {
-                throw new \Exception('Invalid value for number of days given to expirycheck::ExpiryDate filter.');
+            if (!is_int($this->warndaysbefore)) {
+                throw new Error\Exception('Invalid value for number of days given to expirycheck::ExpiryDate filter.');
             }
         }
 
         if (array_key_exists('netid_attr', $config)) {
             $this->netid_attr = $config['netid_attr'];
             if (!is_string($this->netid_attr)) {
-                throw new \Exception(
+                throw new Error\Exception(
                     'Invalid attribute name given as eduPersonPrincipalName to expirycheck::ExpiryDate filter.'
                 );
             }
@@ -70,7 +79,7 @@ class ExpiryDate extends Auth\ProcessingFilter
         if (array_key_exists('expirydate_attr', $config)) {
             $this->expirydate_attr = $config['expirydate_attr'];
             if (!is_string($this->expirydate_attr)) {
-                throw new \Exception(
+                throw new Error\Exception(
                     'Invalid attribute name given as schacExpiryDate to expirycheck::ExpiryDate filter.'
                 );
             }
@@ -79,7 +88,7 @@ class ExpiryDate extends Auth\ProcessingFilter
         if (array_key_exists('date_format', $config)) {
             $this->date_format = $config['date_format'];
             if (!is_string($this->date_format)) {
-                throw new \Exception('Invalid date format given to expirycheck::ExpiryDate filter.');
+                throw new Error\Exception('Invalid date format given to expirycheck::ExpiryDate filter.');
             }
         }
     }
@@ -99,7 +108,7 @@ class ExpiryDate extends Auth\ProcessingFilter
         $end = $expireOnDate;
 
         if ($expireOnDate >= $now) {
-            $days = (int) (($end - $now) / 86400); //24*60*60=86400
+            $days = intval(($end - $now) / 86400); //24*60*60=86400
             if ($days <= $warndaysbefore) {
                 $state['daysleft'] = $days;
                 return true;
@@ -156,7 +165,7 @@ class ExpiryDate extends Auth\ProcessingFilter
             $state['expireOnDate'] = date($this->date_format, $expireOnDate);
             $state['netId'] = $netId;
             $id = Auth\State::saveState($state, 'expirywarning:about2expire');
-            $url = Module::getModuleURL('expirycheck/about2expire.php');
+            $url = Module::getModuleURL('expirycheck/about2expire');
             $httpUtils->redirectTrustedURL($url, ['StateId' => $id]);
         }
 
@@ -168,7 +177,7 @@ class ExpiryDate extends Auth\ProcessingFilter
             $state['expireOnDate'] = date($this->date_format, $expireOnDate);
             $state['netId'] = $netId;
             $id = Auth\State::saveState($state, 'expirywarning:expired');
-            $url = Module::getModuleURL('expirycheck/expired.php');
+            $url = Module::getModuleURL('expirycheck/expired');
             $httpUtils->redirectTrustedURL($url, ['StateId' => $id]);
         }
     }

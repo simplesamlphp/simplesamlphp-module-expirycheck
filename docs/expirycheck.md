@@ -26,19 +26,25 @@ Then you need to set filter parameters in your config.php file.
 Example:
 
 	10 => [
-		'class' 	  => 'expirycheck:ExpiryDate',
-		'netid_attr' 	  => 'userPrincipalName',
+		'class' => 'expirycheck:ExpiryDate',
+		'netid_attr' => 'userPrincipalName',
 		'expirydate_attr' => 'accountExpires',
-		'warndaysbefore'  => '60',
-		'date_format' 	  => 'd.m.Y',
+		'convert_expirydate_to_unixtime' => true,
+		'warndaysbefore' => 60,
+		'date_format' => 'd.m.Y',
 	],
 
 
 Parameter netid_attr represents (ldap) attribute name which has user's NetID stored in it,
 parameter expirydate_attr represents (ldap) attribute name which has user's expiry date
-(date must be formated as YYYYMMDDHHMMSSZ, e.g. 20111011235959Z) stored in it. Those two
-attributes needs to be part of the attribute set, which is retrived from ldap during
+(date must be formated as YYYYMMDDHHMMSSZ, e.g. 20111011235959Z) stored in it.
+Those two attributes needs to be part of the attribute set, which is retrieved from ldap during
 authentication process.
+
+Note:
+Microsoft Active Directory has it's own format to store dates. This filter can automatically convert this
+by setting 'convert_expirydate_to_unixtime' to TRUE.
+
 Parameter warndaysbefore set as a number, which represents how many days before expiry
 date the "about to expire" warning will show to the user.
 Parameter date_format defines date representation format. PHP Date() syntax

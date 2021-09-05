@@ -92,12 +92,11 @@ class ExpiryCheck
             return new RunnableResponse([Auth\ProcessingChain::class, 'resumeProcessing'], [$state]);
         }
 
-        $daysleft = $state['daysleft'];
-
         $t = new Template($this->config, 'expirycheck:about2expire.twig');
         $t->data['autofocus'] = 'yesbutton';
         $t->data['yesTarget'] = Module::getModuleURL('expirycheck/about2expire');
         $t->data['yesData'] = ['StateId' => $stateId];
+        $t->data['daysleft'] = $state['daysleft'];
         $t->data['expireOnDate'] = $state['expireOnDate'];
         $t->data['netId'] = htmlspecialchars($state['netId']);
 

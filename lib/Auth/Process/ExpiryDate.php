@@ -164,10 +164,15 @@ class ExpiryDate extends Auth\ProcessingFilter
          * UTC format: 20090527080352Z
          */
         $netId = $state['Attributes'][$this->netid_attr][0];
-        if ($this->convert_expirydate_to_unixtime === true) {
-            $expireOnDate = $this->convertFiletimeToUnixtime($state['Attributes'][$this->expirydate_attr][0]);
+        $expireOnDate = $state['Attributes'][$this->expirydate_attr][0];
+
+        if (intval($expireOnDate) === 0) {
+            // Never expires
+            return;
+        } else if ($this->convert_expirydate_to_unixtime === true) {
+            $expireOnDate = $this->convertFiletimeToUnixtime($expireOnDate);
         } else {
-            $expireOnDate = strtotime($state['Attributes'][$this->expirydate_attr][0]);
+            $expireOnDate = strtotime($expireOnDate);
         }
 
         $httpUtils = new Utils\HTTP();

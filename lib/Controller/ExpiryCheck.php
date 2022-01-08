@@ -79,7 +79,7 @@ class ExpiryCheck
     {
         Logger::info('expirycheck - User has been warned that NetID is near to expirational date.');
 
-        $stateId = $request->get('StateId');
+        $stateId = $request->query->get('StateId');
         if ($stateId === null) {
             throw new Error\BadRequest('Missing required StateId query parameter.');
         }
@@ -87,7 +87,7 @@ class ExpiryCheck
         /** @psalm-var array $state */
         $state = $this->authState::loadState($stateId, 'expirywarning:about2expire');
 
-        if ($request->get('yes') !== null) {
+        if ($request->query->get('yes') !== null) {
             // The user has pressed the yes-button
             return new RunnableResponse([Auth\ProcessingChain::class, 'resumeProcessing'], [$state]);
         }
@@ -115,7 +115,7 @@ class ExpiryCheck
     {
         Logger::info('expirycheck - User has been warned that NetID is near to expirational date.');
 
-        $stateId = $request->get('StateId');
+        $stateId = $request->query->get('StateId');
         if ($stateId === null) {
             throw new Error\BadRequest('Missing required StateId query parameter.');
         }

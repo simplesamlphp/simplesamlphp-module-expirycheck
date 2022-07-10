@@ -37,7 +37,7 @@ Example:
 
 Parameter netid_attr represents (ldap) attribute name which has user's NetID stored in it,
 parameter expirydate_attr represents (ldap) attribute name which has user's expiry date
-(date must be formated as YYYYMMDDHHMMSSZ, e.g. 20111011235959Z) stored in it.
+(date must be formatted as YYYYMMDDHHMMSSZ, e.g. 20111011235959Z) stored in it.
 Those two attributes needs to be part of the attribute set, which is retrieved from ldap during
 authentication process.
 

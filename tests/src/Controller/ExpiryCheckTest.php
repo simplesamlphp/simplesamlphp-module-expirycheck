@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @covers \SimpleSAML\Module\expirycheck\Controller\ExpiryCheck
  */
-class ExpiryChechTest extends TestCase
+class ExpiryCheckTest extends TestCase
 {
     /** @var \SimpleSAML\Configuration */
     protected Configuration $config;

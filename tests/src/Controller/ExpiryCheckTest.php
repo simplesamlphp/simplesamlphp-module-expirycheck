@@ -74,7 +74,7 @@ class ExpiryCheckTest extends TestCase
     /**
      * @return array
      */
-    public function endpoints(): array
+    public static function endpoints(): array
     {
         return [
             ['about2expire'],
@@ -105,8 +105,8 @@ class ExpiryCheckTest extends TestCase
         });
         $response = $c->expired($request);
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertInstanceOf(Template::class, $response);
+        self::assertTrue($response->isSuccessful());
+        self::assertInstanceOf(Template::class, $response);
     }
 
 
@@ -132,8 +132,8 @@ class ExpiryCheckTest extends TestCase
         });
         $response = $c->about2expire($request);
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertInstanceOf(Template::class, $response);
+        self::assertTrue($response->isSuccessful());
+        self::assertInstanceOf(Template::class, $response);
     }
 
 
@@ -159,7 +159,7 @@ class ExpiryCheckTest extends TestCase
         });
         $response = $c->about2expire($request);
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertInstanceOf(RunnableResponse::class, $response);
+        self::assertTrue($response->isSuccessful());
+        self::assertInstanceOf(RunnableResponse::class, $response);
     }
 }

@@ -46,7 +46,8 @@ class ExpiryDateTest extends TestCase
         $this->expectException(Error\Exception::class);
         $this->expectExceptionMessage("Invalid value for number of days given to expirycheck::ExpiryDate filter.");
         $filter = new ExpiryDate($config, null);
-        self::assertNull($filter);
+        self::fail();
+        $filter->checkDate(1);
     }
 
     /**
@@ -58,7 +59,8 @@ class ExpiryDateTest extends TestCase
         $msg = "Invalid attribute name given as eduPersonPrincipalName to expirycheck::ExpiryDate filter.";
         $this->expectExceptionMessage($msg);
         $filter = new ExpiryDate($config, null);
-        self::assertNull($filter);
+        self::fail();
+        $filter->checkDate(1);
     }
 
     /**
@@ -70,7 +72,8 @@ class ExpiryDateTest extends TestCase
         $msg = "Invalid attribute name given as schacExpiryDate to expirycheck::ExpiryDate filter.";
         $this->expectExceptionMessage($msg);
         $filter = new ExpiryDate($config, null);
-        self::assertNull($filter);
+        self::fail();
+        $filter->checkDate(1);
     }
     
     /**
@@ -82,7 +85,8 @@ class ExpiryDateTest extends TestCase
         $msg = "Invalid date format given to expirycheck::ExpiryDate filter.";
         $this->expectExceptionMessage($msg);
         $filter = new ExpiryDate($config, null);
-        self::assertNull($filter);
+        self::fail();
+        $filter->checkDate(1);
     }
 
     /**
@@ -94,7 +98,8 @@ class ExpiryDateTest extends TestCase
         $msg = "Invalid value for convert_expirydate_to_unixtime given to expirycheck::ExpiryDate filter.";
         $this->expectExceptionMessage($msg);
         $filter = new ExpiryDate($config, null);
-        self::assertNull($filter);
+        self::fail();
+        $filter->checkDate(1);
     }
 
     /**
@@ -102,7 +107,7 @@ class ExpiryDateTest extends TestCase
     public function testValidConfiguration(): void
     {
         $filter = new ExpiryDate(self::$config, null);
-        self::assertNotNull($filter);
+        self::assertFalse($filter->checkDate(1));
     }
 
     /**

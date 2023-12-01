@@ -32,12 +32,6 @@ class ExpiryDateTest extends TestCase
         'Attributes' => [],
     ];
 
-    /** @var array IdP request */
-    private static $idpRequest = [
-        'SimpleSAML_Auth_State.id' => 'SimpleSAML_Auth_State.id',
-        'SimpleSAML_Auth_State.stage' => 'sspmod_core_Auth_UserPassBase.state',
-    ];
-
     /**
      */
     public function testInvalidWarndaysbefore(): void
@@ -165,7 +159,7 @@ class ExpiryDateTest extends TestCase
                 'accountExpires' => ['20231228112510Z'],
             ]
         ];
-        $request = array_merge(self::$minRequest, self::$idpRequest, $initialState);
+        $request = array_merge(self::$minRequest, $initialState);
         $state = $initialState;
         $filter->process($request);
         self::assertEquals($initialState, $state);

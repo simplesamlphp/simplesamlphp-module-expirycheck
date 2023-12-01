@@ -20,7 +20,7 @@ class ExpiryDateTest extends TestCase
         'warndaysbefore' => 60,
         'date_format' => 'd.m.Y', # php date syntax
     ];
-    
+
     /** @var array minimal request */
     private static $minRequest = [
         'Source' => [
@@ -69,7 +69,7 @@ class ExpiryDateTest extends TestCase
         self::fail();
         $filter->checkDate(1);
     }
-    
+
     /**
      */
     public function testInvalidDateFormat(): void
@@ -165,5 +165,4 @@ class ExpiryDateTest extends TestCase
         $filter->process($request);
         self::assertEquals($initialState, $state);
     }
-
 }

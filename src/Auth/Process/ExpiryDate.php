@@ -41,17 +41,23 @@ class ExpiryDate extends Auth\ProcessingFilter
     /** @var int */
     private int $warndaysbefore = 0;
 
-    /** @var string */
-    private string $netid_attr;
+    /**
+     *  @var string
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    private string $netidAttr;
+
+    /**
+     * @var string
+     * @psalm-suppress PropertyNotSetInConstructor
+     * */
+    private string $expirydateAttr;
 
     /** @var string */
-    private string $expirydate_attr;
-
-    /** @var string */
-    private string $date_format = 'd.m.Y';
+    private string $dateFormat = 'd.m.Y';
 
     /** @var bool */
-    private bool $convert_expirydate_to_unixtime = false;
+    private bool $convertExpirydateToUnixtime = false;
 
 
     /**
@@ -79,7 +85,7 @@ class ExpiryDate extends Auth\ProcessingFilter
                 );
             }
 
-            $this->netid_attr = $config['netid_attr'];
+            $this->netidAttr = $config['netid_attr'];
         }
 
         if (array_key_exists('expirydate_attr', $config)) {
@@ -89,7 +95,7 @@ class ExpiryDate extends Auth\ProcessingFilter
                 );
             }
 
-            $this->expirydate_attr = $config['expirydate_attr'];
+            $this->expirydateAttr = $config['expirydate_attr'];
         }
 
         if (array_key_exists('date_format', $config)) {
@@ -97,7 +103,7 @@ class ExpiryDate extends Auth\ProcessingFilter
                 throw new Error\Exception('Invalid date format given to expirycheck::ExpiryDate filter.');
             }
 
-            $this->date_format = $config['date_format'];
+            $this->dateFormat = $config['date_format'];
         }
 
         if (array_key_exists('convert_expirydate_to_unixtime', $config)) {
@@ -107,7 +113,7 @@ class ExpiryDate extends Auth\ProcessingFilter
                 );
             }
 
-            $this->convert_expirydate_to_unixtime = $config['convert_expirydate_to_unixtime'];
+            $this->convertExpirydateToUnixtime = $config['convert_expirydate_to_unixtime'];
         }
     }
 
@@ -143,11 +149,7 @@ class ExpiryDate extends Auth\ProcessingFilter
     public function checkDate(int $expireOnDate): bool
     {
         $now = time();
-        if ($now <= $expireOnDate) {
-            return true;
-        } else {
-            return false;
-        }
+        return $now <= $expireOnDate;
     }
 
 
@@ -163,13 +165,13 @@ class ExpiryDate extends Auth\ProcessingFilter
         /*
          * UTC format: 20090527080352Z
          */
-        $netId = $state['Attributes'][$this->netid_attr][0];
-        $expireOnDate = $state['Attributes'][$this->expirydate_attr][0];
+        $netId = $state['Attributes'][$this->netidAttr][0];
+        $expireOnDate = $state['Attributes'][$this->expirydateAttr][0];
 
         if (intval($expireOnDate) === 0) {
             // Never expires
             return;
-        } else if ($this->convert_expirydate_to_unixtime === true) {
+        } elseif ($this->convertExpirydateToUnixtime === true) {
             $expireOnDate = $this->convertFiletimeToUnixtime($expireOnDate);
         } else {
             $expireOnDate = strtotime($expireOnDate);
@@ -184,7 +186,7 @@ class ExpiryDate extends Auth\ProcessingFilter
             Logger::warning('expirycheck: NetID ' . $netId . ' is about to expire!');
 
             // Save state and redirect
-            $state['expireOnDate'] = date($this->date_format, $expireOnDate);
+            $state['expireOnDate'] = date($this->dateFormat, $expireOnDate);
             $state['netId'] = $netId;
             $id = Auth\State::saveState($state, 'expirywarning:about2expire');
             $url = Module::getModuleURL('expirycheck/about2expire');
@@ -193,10 +195,10 @@ class ExpiryDate extends Auth\ProcessingFilter
 
         if (!$this->checkDate($expireOnDate)) {
             Logger::error('expirycheck: NetID ' . $netId .
-                ' has expired [' . date($this->date_format, $expireOnDate) . ']. Access denied!');
+                ' has expired [' . date($this->dateFormat, $expireOnDate) . ']. Access denied!');
 
             /* Save state and redirect. */
-            $state['expireOnDate'] = date($this->date_format, $expireOnDate);
+            $state['expireOnDate'] = date($this->dateFormat, $expireOnDate);
             $state['netId'] = $netId;
             $id = Auth\State::saveState($state, 'expirywarning:expired');
             $url = Module::getModuleURL('expirycheck/expired');

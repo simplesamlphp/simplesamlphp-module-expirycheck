@@ -243,36 +243,4 @@ jobs:
         run: composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-req=ext-posix
 
       - name: Run unit tests
-        run: vendor/bin/phpunit --no-coverage
-
-  coverage:
-    name: Code coverage
-    runs-on: [ubuntu-latest]
-    needs: [unit-tests-linux]
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: coverage-data
-          path: ${{ github.workspace }}/build
-
-      - name: Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
-          verbose: true
-
-  cleanup:
-    name: Cleanup artifacts
-    needs: [unit-tests-linux, coverage]
-    runs-on: [ubuntu-latest]
-    if: |
-      always() &&
-      needs.coverage.result == 'success' ||
-      (needs.unit-tests-linux == 'success' && needs.coverage == 'skipped')
-    steps:
-      - uses: geekyeggo/delete-artifact@v2
-        with:
-          name: coverage-data        
+        run: vendor/bin/phpunit --no-coverage      

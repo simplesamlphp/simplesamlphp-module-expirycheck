@@ -75,7 +75,7 @@ class ExpiryCheck
      *
      * @return \SimpleSAML\XHTML\Template|\SimpleSAML\HTTP\RunnableResponse
      */
-    public function about2expire(Request $request)
+    public function about2expire(Request $request) Template|RunnableResponse
     {
         Logger::info('expirycheck - User has been warned that NetID is near to expirational date.');
 
@@ -84,7 +84,6 @@ class ExpiryCheck
             throw new Error\BadRequest('Missing required StateId query parameter.');
         }
 
-        /** @psalm-var array $state */
         $state = $this->authState::loadState($stateId, 'expirywarning:about2expire');
 
         if ($request->query->get('yes') !== null) {
@@ -120,7 +119,6 @@ class ExpiryCheck
             throw new Error\BadRequest('Missing required StateId query parameter.');
         }
 
-        /** @psalm-var array $state */
         $state = $this->authState::loadState($stateId, 'expirywarning:expired');
 
         $t = new Template($this->config, 'expirycheck:expired.twig');

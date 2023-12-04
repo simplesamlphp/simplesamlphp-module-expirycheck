@@ -44,7 +44,7 @@ class ExpiryDate extends Auth\ProcessingFilter
     private int $warndaysbefore = 0;
 
     /**
-     *  @var string
+     * @var string
      * @psalm-suppress PropertyNotSetInConstructor
      */
     private string $netidAttr;

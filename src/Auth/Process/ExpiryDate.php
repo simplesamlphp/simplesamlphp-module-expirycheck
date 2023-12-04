@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\Module\expirycheck\Auth\Process;
 
 use SimpleSAML\Assert\Assert;

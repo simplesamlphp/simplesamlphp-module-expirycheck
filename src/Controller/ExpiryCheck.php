@@ -75,7 +75,7 @@ class ExpiryCheck
      *
      * @return \SimpleSAML\XHTML\Template|\SimpleSAML\HTTP\RunnableResponse
      */
-    public function about2expire(Request $request) Template|RunnableResponse
+    public function about2expire(Request $request): Template|RunnableResponse
     {
         Logger::info('expirycheck - User has been warned that NetID is near to expirational date.');
 

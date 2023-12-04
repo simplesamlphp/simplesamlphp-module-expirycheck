@@ -138,7 +138,7 @@ class ExpiryDateTest extends TestCase
 
     /**
      */
-    public function testProcessAttributesNotExists(): void
+    public function testProcessMissingAttributes(): void
     {
         $filter = new ExpiryDate(self::$config, null);
         $state = [];
@@ -150,9 +150,38 @@ class ExpiryDateTest extends TestCase
 
     /**
      */
-    public function testProcessNoExpiryDate(): void
+    public function testProcessMissingNetidAttr(): void
     {
-        $this->markTestSkipped('Needs to investigate');
+        $filter = new ExpiryDate(self::$config, null);
+        $initialState = ['Attributes' => []];
+        $state = $initialState;
+        $this->expectException(AssertionFailedException::class);
+        $msg = "Expected the key \"userPrincipalName\" to exist.";
+        $this->expectExceptionMessage($msg);
+        $filter->process($state);
+    }
+
+    /**
+     */
+    public function testProcessMissingExpirydate(): void
+    {
+        $filter = new ExpiryDate(self::$config, null);
+        $initialState = ['Attributes' =>
+            [
+                'userPrincipalName' => ['test'],
+            ]
+        ];
+        $state = $initialState;
+        $filter->process($state);
+        self::assertEquals($initialState, $state);
+    }
+
+    /**
+     */
+    public function testProcessNoExpiry(): void
+    {
+        $skipReason = 'https://github.com/simplesamlphp/simplesamlphp-test-framework/issues/3#issuecomment-1836154792';
+        $this->markTestSkipped($skipReason);
         $filter = new ExpiryDate(self::$config, null);
         $initialState = ["Attributes" =>
             [

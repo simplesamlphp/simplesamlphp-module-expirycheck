@@ -161,12 +161,17 @@ class ExpiryDate extends Auth\ProcessingFilter
     public function process(array &$state): void
     {
         Assert::keyExists($state, 'Attributes');
+        Assert::keyExists($state['Attributes'], $this->netidAttr);
 
         /*
          * UTC format: 20090527080352Z
          */
         $netId = $state['Attributes'][$this->netidAttr][0];
-        $expireOnDate = $state['Attributes'][$this->expirydateAttr][0];
+        // expirydateAttr optional
+        $expireOnDate = "0";
+        if (array_key_exists($this->expirydateAttr, $state['Attributes'])) {
+            $expireOnDate = $state['Attributes'][$this->expirydateAttr][0];
+        }
 
         if (intval($expireOnDate) === 0) {
             // Never expires

@@ -2,20 +2,20 @@
 {% extends "base.twig" %}
 
 {% block content %}
-    <form style="display: inline; margin: 0px; padding: 0px" action="{{ yesTarget|escape('html') }}">
+    <form style="display: inline; margin: 0px; padding: 0px" action="{{ yesTarget|escape }}">
         {% for name, value in yesData %}
-        <input type="hidden" name="{{ name|escape('html') }}" value="{{ value|escape('html') }}">
+        <input type="hidden" name="{{ name|escape }}" value="{{ value|escape }}">
         {% endfor %}
 
         {% if daysleft == 0 %}
         {% set header = 'Warning, your account %NETID% will expire today!'|trans({'%NETID%': netId}) %}
         <h3>{{ 'Warning, your account %NETID% will expire today!'|trans({'%NETID': netId}) }}</h3>
         {% elseif daysleft == 1 %}
-        {% set header = 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'day'|trans(), '%DAYSLEFT%': daysleft|escape('html')}) %}
-        <h3>{{ '{expirycheck:expwarning:warning}'|trans({'%NETID': netId, '%DAYS%': 'day'|trans(), '%DAYSLEFT%': daysleft|escape('html')}) }}</h3>
+        {% set header = 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'day'|trans(), '%DAYSLEFT%': daysleft|escape}) %}
+        <h3>{{ '{expirycheck:expwarning:warning}'|trans({'%NETID': netId, '%DAYS%': 'day'|trans(), '%DAYSLEFT%': daysleft|escape}) }}</h3>
         {% else %}
-        {% set header = 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'days'|trans(), '%DAYSLEFT%': daysleft|escape('html')}) %}
-        <h3>{{ 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'days'|trans(), '%DAYSLEFT%': daysleft|escape('html')}) }}</h3>
+        {% set header = 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'days'|trans(), '%DAYSLEFT%': daysleft|escape}) %}
+        <h3>{{ 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'days'|trans(), '%DAYSLEFT%': daysleft|escape}) }}</h3>
         {% endif %}
 
         <p>{{ 'Expiration date:'|trans }} {{ expireOnDate }}</p>

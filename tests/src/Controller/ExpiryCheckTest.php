@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\Module\expirycheck\Controller;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Auth;
 use SimpleSAML\Configuration;
@@ -16,9 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Set of tests for the controllers in the "expirycheck" module.
- *
- * @covers \SimpleSAML\Module\expirycheck\Controller\ExpiryCheck
  */
+#[CoversClass(Controller\ExpiryCheck::class)]
 class ExpiryCheckTest extends TestCase
 {
     /** @var \SimpleSAML\Configuration */
@@ -52,10 +53,10 @@ class ExpiryCheckTest extends TestCase
     /**
      * Test that a missing SourceID results in an error-response
      *
-     * @dataProvider endpoints
      * @param string $endpoint
      * @return void
      */
+    #[DataProvider('endpoints')]
     public function testMissingSourceId(string $endpoint): void
     {
         $request = Request::create(

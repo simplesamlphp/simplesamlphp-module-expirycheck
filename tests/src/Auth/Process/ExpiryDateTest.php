@@ -169,7 +169,7 @@ class ExpiryDateTest extends TestCase
         $initialState = ['Attributes' =>
             [
                 'userPrincipalName' => ['test'],
-            ]
+            ],
         ];
         $state = $initialState;
         $filter->process($state);
@@ -187,7 +187,7 @@ class ExpiryDateTest extends TestCase
             [
                 'userPrincipalName' => ['test'],
                 'accountExpires' => ['20231228112510Z'],
-            ]
+            ],
         ];
         $request = array_merge(self::$minRequest, $initialState);
         $state = $initialState;

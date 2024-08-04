@@ -41,7 +41,7 @@ class ExpiryCheckTest extends TestCase
                 'module.enable' => ['expirycheck' => true],
             ],
             '[ARRAY]',
-            'simplesaml'
+            'simplesaml',
         );
 
         $this->session = Session::getSessionFromRequest();
@@ -61,7 +61,7 @@ class ExpiryCheckTest extends TestCase
     {
         $request = Request::create(
             '/' . $endpoint,
-            'GET'
+            'GET',
         );
 
         $c = new Controller\ExpiryCheck($this->config, $this->session);
@@ -148,7 +148,7 @@ class ExpiryCheckTest extends TestCase
         $request = Request::create(
             '/about2expire',
             'GET',
-            ['yes' => 'yes', 'StateId' => 'abc123']
+            ['yes' => 'yes', 'StateId' => 'abc123'],
         );
 
         $c = new Controller\ExpiryCheck($this->config, $this->session);

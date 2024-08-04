@@ -83,7 +83,7 @@ class ExpiryDate extends Auth\ProcessingFilter
         if (array_key_exists('netid_attr', $config)) {
             if (!is_string($config['netid_attr'])) {
                 throw new Error\Exception(
-                    'Invalid attribute name given as eduPersonPrincipalName to expirycheck::ExpiryDate filter.'
+                    'Invalid attribute name given as eduPersonPrincipalName to expirycheck::ExpiryDate filter.',
                 );
             }
 
@@ -93,7 +93,7 @@ class ExpiryDate extends Auth\ProcessingFilter
         if (array_key_exists('expirydate_attr', $config)) {
             if (!is_string($config['expirydate_attr'])) {
                 throw new Error\Exception(
-                    'Invalid attribute name given as schacExpiryDate to expirycheck::ExpiryDate filter.'
+                    'Invalid attribute name given as schacExpiryDate to expirycheck::ExpiryDate filter.',
                 );
             }
 
@@ -111,7 +111,7 @@ class ExpiryDate extends Auth\ProcessingFilter
         if (array_key_exists('convert_expirydate_to_unixtime', $config)) {
             if (!is_bool($config['convert_expirydate_to_unixtime'])) {
                 throw new Error\Exception(
-                    'Invalid value for convert_expirydate_to_unixtime given to expirycheck::ExpiryDate filter.'
+                    'Invalid value for convert_expirydate_to_unixtime given to expirycheck::ExpiryDate filter.',
                 );
             }
 

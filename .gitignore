@@ -4,6 +4,7 @@
 composer.lock
 composer.phar
 phpunit.xml.bak
+/super-linter-output/
 /vendor/
 /build/
 

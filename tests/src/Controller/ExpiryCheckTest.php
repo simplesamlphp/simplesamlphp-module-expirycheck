@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Set of tests for the controllers in the "expirycheck" module.
  */
 #[CoversClass(Controller\ExpiryCheck::class)]
-class ExpiryCheckTest extends TestCase
+final class ExpiryCheckTest extends TestCase
 {
     /** @var \SimpleSAML\Configuration */
     protected Configuration $config;

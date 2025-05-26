@@ -9,7 +9,7 @@ use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Error;
 use SimpleSAML\Module\expirycheck\Auth\Process\ExpiryDate;
 
-class ExpiryDateTest extends TestCase
+final class ExpiryDateTest extends TestCase
 {
     /** @var array valid configuration */
     private static $config = [

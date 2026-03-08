@@ -67,13 +67,16 @@ final class ExpiryCheckTest extends TestCase
         $c = new Controller\ExpiryCheck($this->config, $this->session);
 
         $this->expectException(Error\BadRequest::class);
-        $this->expectExceptionMessage("BADREQUEST('%REASON%' => 'Missing required StateId query parameter.')");
-        call_user_func([$c, $endpoint], $request);
+        $this->expectExceptionMessage('{"errorCode":"BADREQUEST","%REASON%":"Missing required StateId query parameter."}');
+
+        /** @var callable $callable */
+        $callable = [$c, $endpoint];
+        call_user_func($callable, $request);
     }
 
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public static function endpoints(): array
     {
@@ -99,7 +102,8 @@ final class ExpiryCheckTest extends TestCase
 
         $c = new Controller\ExpiryCheck($this->config, $this->session);
         $c->setAuthState(new class () extends Auth\State {
-            public static function loadState(string $id, string $stage, bool $allowMissing = false): ?array
+            /** @return array<mixed> */
+            public static function loadState(string $id, string $stage, bool $allowMissing = false): array
             {
                 return ['expireOnDate' => 'someDate', 'netId' => 'someId'];
             }
@@ -107,7 +111,6 @@ final class ExpiryCheckTest extends TestCase
         $response = $c->expired($request);
 
         self::assertTrue($response->isSuccessful());
-        self::assertInstanceOf(Template::class, $response);
     }
 
 
@@ -126,7 +129,8 @@ final class ExpiryCheckTest extends TestCase
 
         $c = new Controller\ExpiryCheck($this->config, $this->session);
         $c->setAuthState(new class () extends Auth\State {
-            public static function loadState(string $id, string $stage, bool $allowMissing = false): ?array
+            /** @return array<mixed> */
+            public static function loadState(string $id, string $stage, bool $allowMissing = false): array
             {
                 return ['daysleft' => 10, 'expireOnDate' => 'someDate', 'netId' => 'someId'];
             }
@@ -153,7 +157,8 @@ final class ExpiryCheckTest extends TestCase
 
         $c = new Controller\ExpiryCheck($this->config, $this->session);
         $c->setAuthState(new class () extends Auth\State {
-            public static function loadState(string $id, string $stage, bool $allowMissing = false): ?array
+            /** @return array<mixed> */
+            public static function loadState(string $id, string $stage, bool $allowMissing = false): array
             {
                 return [];
             }

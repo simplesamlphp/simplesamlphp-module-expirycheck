@@ -65,7 +65,7 @@ class ExpiryDate extends Auth\ProcessingFilter
     /**
      * Initialize this filter.
      *
-     * @param array &$config  Configuration information about this filter.
+     * @param array<mixed> &$config  Configuration information about this filter.
      * @param mixed $reserved  For future use.
      */
     public function __construct(array &$config, $reserved)
@@ -123,7 +123,7 @@ class ExpiryDate extends Auth\ProcessingFilter
     /**
      * Show expirational warning if remaining days is equal or under defined $warndaysbefore
      *
-     * @param array &$state
+     * @param array<mixed> &$state
      * @param int $expireOnDate
      * @param int $warndaysbefore
      * @return bool
@@ -158,7 +158,7 @@ class ExpiryDate extends Auth\ProcessingFilter
     /**
      * Apply filter
      *
-     * @param array &$state  The current state.
+     * @param array<mixed> &$state  The current state.
      */
     public function process(array &$state): void
     {

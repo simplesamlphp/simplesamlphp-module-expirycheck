@@ -11,8 +11,8 @@ use SimpleSAML\Module\expirycheck\Auth\Process\ExpiryDate;
 
 final class ExpiryDateTest extends TestCase
 {
-    /** @var array valid configuration */
-    private static $config = [
+    /** @var array<mixed> $config valid configuration */
+    private static array $config = [
         'class' => 'expirycheck:ExpiryDate',
         'netid_attr' => 'userPrincipalName',
         'expirydate_attr' => 'accountExpires',
@@ -21,8 +21,13 @@ final class ExpiryDateTest extends TestCase
         'date_format' => 'd.m.Y', # php date syntax
     ];
 
-    /** @var array minimal request */
-    private static $minRequest = [
+    /**
+     * The phpstan-ignore is necessary as long as we can't run testProcessNoExpiry
+     *
+     * @var array<mixed> $minRequest minimal request
+     * @phpstan-ignore property.onlyWritten
+     */
+    private static array $minRequest = [
         'Source' => [
             'entityid' => 'https://localhost/sp',
         ],
@@ -40,8 +45,8 @@ final class ExpiryDateTest extends TestCase
         $this->expectException(Error\Exception::class);
         $this->expectExceptionMessage("Invalid value for number of days given to expirycheck::ExpiryDate filter.");
         $filter = new ExpiryDate($config, null);
-        self::fail();
         $filter->checkDate(1);
+        self::fail();
     }
 
     /**
@@ -53,8 +58,8 @@ final class ExpiryDateTest extends TestCase
         $msg = "Invalid attribute name given as eduPersonPrincipalName to expirycheck::ExpiryDate filter.";
         $this->expectExceptionMessage($msg);
         $filter = new ExpiryDate($config, null);
-        self::fail();
         $filter->checkDate(1);
+        self::fail();
     }
 
     /**
@@ -66,8 +71,8 @@ final class ExpiryDateTest extends TestCase
         $msg = "Invalid attribute name given as schacExpiryDate to expirycheck::ExpiryDate filter.";
         $this->expectExceptionMessage($msg);
         $filter = new ExpiryDate($config, null);
-        self::fail();
         $filter->checkDate(1);
+        self::fail();
     }
 
     /**
@@ -79,8 +84,8 @@ final class ExpiryDateTest extends TestCase
         $msg = "Invalid date format given to expirycheck::ExpiryDate filter.";
         $this->expectExceptionMessage($msg);
         $filter = new ExpiryDate($config, null);
-        self::fail();
         $filter->checkDate(1);
+        self::fail();
     }
 
     /**
@@ -92,8 +97,8 @@ final class ExpiryDateTest extends TestCase
         $msg = "Invalid value for convert_expirydate_to_unixtime given to expirycheck::ExpiryDate filter.";
         $this->expectExceptionMessage($msg);
         $filter = new ExpiryDate($config, null);
-        self::fail();
         $filter->checkDate(1);
+        self::fail();
     }
 
     /**
@@ -182,16 +187,16 @@ final class ExpiryDateTest extends TestCase
     {
         $skipReason = 'https://github.com/simplesamlphp/simplesamlphp-test-framework/issues/3#issuecomment-1836154792';
         $this->markTestSkipped($skipReason);
-        $filter = new ExpiryDate(self::$config, null);
-        $initialState = ["Attributes" =>
-            [
-                'userPrincipalName' => ['test'],
-                'accountExpires' => ['20231228112510Z'],
-            ],
-        ];
-        $request = array_merge(self::$minRequest, $initialState);
-        $state = $initialState;
-        $filter->process($request);
-        self::assertEquals($initialState, $state);
+//        $filter = new ExpiryDate(self::$config, null);
+//        $initialState = ["Attributes" =>
+//            [
+//                'userPrincipalName' => ['test'],
+//                'accountExpires' => ['20231228112510Z'],
+//            ],
+//        ];
+//        $request = array_merge(self::$minRequest, $initialState);
+//        $state = $initialState;
+//        $filter->process($request);
+//        self::assertEquals($initialState, $state);
     }
 }

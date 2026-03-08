@@ -67,7 +67,9 @@ final class ExpiryCheckTest extends TestCase
         $c = new Controller\ExpiryCheck($this->config, $this->session);
 
         $this->expectException(Error\BadRequest::class);
-        $this->expectExceptionMessage('{"errorCode":"BADREQUEST","%REASON%":"Missing required StateId query parameter."}');
+        $this->expectExceptionMessage(
+            '{"errorCode":"BADREQUEST","%REASON%":"Missing required StateId query parameter."}',
+        );
 
         /** @var callable $callable */
         $callable = [$c, $endpoint];

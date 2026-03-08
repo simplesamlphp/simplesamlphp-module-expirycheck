@@ -37,6 +37,7 @@ final class ExpiryDateTest extends TestCase
         'Attributes' => [],
     ];
 
+
     /**
      */
     public function testInvalidWarndaysbefore(): void
@@ -48,6 +49,7 @@ final class ExpiryDateTest extends TestCase
         $filter->checkDate(1);
         self::fail();
     }
+
 
     /**
      */
@@ -62,6 +64,7 @@ final class ExpiryDateTest extends TestCase
         self::fail();
     }
 
+
     /**
      */
     public function testInvalidExpirydateAttr(): void
@@ -74,6 +77,7 @@ final class ExpiryDateTest extends TestCase
         $filter->checkDate(1);
         self::fail();
     }
+
 
     /**
      */
@@ -88,6 +92,7 @@ final class ExpiryDateTest extends TestCase
         self::fail();
     }
 
+
     /**
      */
     public function testInvalidConvertToUnixtime(): void
@@ -101,6 +106,7 @@ final class ExpiryDateTest extends TestCase
         self::fail();
     }
 
+
     /**
      */
     public function testValidConfiguration(): void
@@ -108,6 +114,7 @@ final class ExpiryDateTest extends TestCase
         $filter = new ExpiryDate(self::$config, null);
         self::assertFalse($filter->checkDate(1));
     }
+
 
     /**
      */
@@ -118,6 +125,7 @@ final class ExpiryDateTest extends TestCase
         $warning = $filter->shWarning($state, strtotime("10 September 2000"), 30);
         self::assertFalse($warning);
     }
+
 
     /**
      */
@@ -130,6 +138,7 @@ final class ExpiryDateTest extends TestCase
         self::assertTrue($warning);
     }
 
+
     /**
      */
     public function testWarningDistantFuture(): void
@@ -140,6 +149,7 @@ final class ExpiryDateTest extends TestCase
         $warning = $filter->shWarning($state, $nextCentury, 30);
         self::assertFalse($warning);
     }
+
 
     /**
      */
@@ -153,6 +163,7 @@ final class ExpiryDateTest extends TestCase
         $filter->process($state);
     }
 
+
     /**
      */
     public function testProcessMissingNetidAttr(): void
@@ -165,6 +176,7 @@ final class ExpiryDateTest extends TestCase
         $this->expectExceptionMessage($msg);
         $filter->process($state);
     }
+
 
     /**
      */
@@ -180,6 +192,7 @@ final class ExpiryDateTest extends TestCase
         $filter->process($state);
         self::assertEquals($initialState, $state);
     }
+
 
     /**
      */

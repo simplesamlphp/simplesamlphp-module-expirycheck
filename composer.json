@@ -28,11 +28,6 @@
             "SimpleSAML\\Module\\expirycheck\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "SimpleSAML\\Test\\Utils\\": "vendor/simplesamlphp/simplesamlphp/tests/Utils"
-        }
-    },
     "require": {
         "php": "^8.3",
 

@@ -9,16 +9,16 @@
 
         {% if daysleft == 0 %}
         {% set header = 'Warning, your account %NETID% will expire today!'|trans({'%NETID%': netId}) %}
-        <h3>{{ 'Warning, your account %NETID% will expire today!'|trans({'%NETID': netId}) }}</h3>
+        <h3>{{ 'Warning, your account %NETID% will expire today!'|trans({'%NETID%': netId}) }}</h3>
         {% elseif daysleft == 1 %}
         {% set header = 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'day'|trans(), '%DAYSLEFT%': daysleft|escape}) %}
-        <h3>{{ '{expirycheck:expwarning:warning}'|trans({'%NETID': netId, '%DAYS%': 'day'|trans(), '%DAYSLEFT%': daysleft|escape}) }}</h3>
+        <h3>{{ 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'day'|trans(), '%DAYSLEFT%': daysleft|escape}) }}</h3>
         {% else %}
         {% set header = 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'days'|trans(), '%DAYSLEFT%': daysleft|escape}) %}
         <h3>{{ 'Warning, your account %NETID% will expire in %DAYSLEFT% %DAYS%!'|trans({'%NETID%': netId, '%DAYS%': 'days'|trans(), '%DAYSLEFT%': daysleft|escape}) }}</h3>
         {% endif %}
 
-        <p>{{ 'Expiration date:'|trans }} {{ expireOnDate }}</p>
+        <p>{{ 'Expiration date:'|trans }} <b>{{ expireOnDate }}</b></p>
         <input type="submit" name="yes" id="yesbutton" value="{{ 'I am aware of this, continue...'|trans }}" autofocus>
     </form>
 {% endblock %}
